@@ -1,0 +1,60 @@
+# Build directories
+/build/
+/out/
+/bin/
+/lib/
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake-build-*/
+compile_commands.json
+CTestTestfile.cmake
+cmake_install.cmake
+install_manifest.txt
+Testing/
+
+# Ninja
+.ninja_deps
+.ninja_log
+build.ninja
+
+# Visual Studio
+/.vs/
+*.VC.db
+*.VC.opendb
+*.sln.docstates
+*.vcxproj.user
+*.vcxproj.filters
+*.aps
+*.ipch
+*.pdb
+*.obj
+*.idb
+*.ilk
+*.tlog
+
+# JetBrains IDEs
+/.idea/
+
+# Compiler outputs
+*.o
+*.obj
+*.lo
+*.la
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+*.exe
+*.exp
+
+# Logs and temp files
+*.log
+*.tmp
+*.temp
+*.cache
+*.bak
+*.swp
+
