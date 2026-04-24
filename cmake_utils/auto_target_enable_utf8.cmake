@@ -1,0 +1,7 @@
+function(target_enable_utf8 TARGET_NAME)
+    if(MSVC)
+        target_compile_options(${TARGET_NAME} PRIVATE /utf-8 /wd4819)
+    elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+        target_compile_options(${TARGET_NAME} PRIVATE -finput-charset=UTF-8 -fexec-charset=UTF-8)
+    endif()
+endfunction()
