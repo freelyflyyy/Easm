@@ -1,7 +1,7 @@
 <div align="center">
 <h1>Easm</h1>
 
-[English](README.txt) | [简体中文](README_CN.txt)
+[English](README.txt) | [简体中文](README_CN.md)
 
 </div>
 
