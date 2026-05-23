@@ -14,64 +14,6 @@
             }
         },
         {
-            "name": "msvc-x64-base",
-            "hidden": true,
-            "inherits": "windows-base",
-            "architecture": {
-                "value": "x64",
-                "strategy": "external"
-            },
-            "cacheVariables": {
-                "CMAKE_C_COMPILER": "cl.exe",
-                "CMAKE_CXX_COMPILER": "cl.exe"
-            }
-        },
-        {
-            "name": "msvc-x64-debug",
-            "displayName": "MSVC x64 Debug",
-            "inherits": "msvc-x64-base",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug"
-            }
-        },
-        {
-            "name": "msvc-x64-release",
-            "displayName": "MSVC x64 Release",
-            "inherits": "msvc-x64-base",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release"
-            }
-        },
-        {
-            "name": "msvc-x86-base",
-            "hidden": true,
-            "inherits": "windows-base",
-            "architecture": {
-                "value": "x86",
-                "strategy": "external"
-            },
-            "cacheVariables": {
-                "CMAKE_C_COMPILER": "cl.exe",
-                "CMAKE_CXX_COMPILER": "cl.exe"
-            }
-        },
-        {
-            "name": "msvc-x86-debug",
-            "displayName": "MSVC x86 Debug",
-            "inherits": "msvc-x86-base",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug"
-            }
-        },
-        {
-            "name": "msvc-x86-release",
-            "displayName": "MSVC x86 Release",
-            "inherits": "msvc-x86-base",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release"
-            }
-        },
-        {
             "name": "mingw-x64-base",
             "hidden": true,
             "inherits": "windows-base",
