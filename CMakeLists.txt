@@ -1,7 +1,8 @@
 ﻿cmake_minimum_required (VERSION 3.10)
-project ("easm")
+project ("Easm")
 
-include("${CMAKE_CURRENT_SOURCE_DIR}/cmake_utils/auto_target_enable_utf8.cmake")
+include(cmake_utils/auto_target_enable_utf8.cmake)
+include(cmake_utils/setup_project_compile_options.cmake)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -18,3 +19,6 @@ enable_testing()
 # 包含子项目。
 add_subdirectory ("easm")
 add_subdirectory ("easm-testing")
+
+setup_project_compile_options(easm)
+setup_project_compile_options(easm-testing)
