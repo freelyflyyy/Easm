@@ -1,6 +1,7 @@
-set(EASM_INTERNAL_SUPPORT_HEADERS
-    "internal/support/api-build_p.h"
-    "internal/support/api-config.h"
+set(EASM_BASE_HEADERS
+    "base/base.h"
+    "base/type.h"
+    "base/version.h"
 )
 
 set(EASM_INTERNAL_MEMORY_HEADERS
@@ -14,13 +15,14 @@ set(EASM_INTERNAL_MEMORY_SOURCES
 )
 
 set(EASM_HEADERS
-    ${EASM_INTERNAL_SUPPORT_HEADERS}
+    ${EASM_BASE_HEADERS}
     ${EASM_INTERNAL_MEMORY_HEADERS}
 )
 
 set(EASM_SOURCES
     ${EASM_INTERNAL_MEMORY_SOURCES}
 )
+
 
 add_library(easm STATIC ${EASM_HEADERS} ${EASM_SOURCES})
 
