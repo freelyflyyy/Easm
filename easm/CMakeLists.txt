@@ -1,28 +1,29 @@
-set(EASM_INTERNAL_SUPPORT_HEADERS
-    "internal/support/api-build_p.h"
-    "internal/support/api-config.h"
+set(EASM_BASE_HEADERS
+    "base/base.h"
+    "base/type.h"
+    "base/version.h"
 )
 
-set(EASM_INTERNAL_MEMORY_HEADERS
-    "internal/memory/virtmem.h"
-    "internal/memory/zone.h"
+set(EASM_CORE_HEADERS
+    "core/codebuffer.h"
 )
 
-set(EASM_INTERNAL_MEMORY_SOURCES
-    "internal/memory/virtmem.cpp"
-    "internal/memory/zone.cpp"
+set(EASM_CORE_SOURCES
+    "core/codebuffer.cpp"
 )
 
 set(EASM_HEADERS
-    ${EASM_INTERNAL_SUPPORT_HEADERS}
-    ${EASM_INTERNAL_MEMORY_HEADERS}
+    ${EASM_BASE_HEADERS}
+    ${EASM_CORE_HEADERS}
 )
 
 set(EASM_SOURCES
-    ${EASM_INTERNAL_MEMORY_SOURCES}
+    ${EASM_CORE_SOURCES}
 )
 
+
 add_library(easm STATIC ${EASM_HEADERS} ${EASM_SOURCES})
+set_target_properties(easm PROPERTIES LINKER_LANGUAGE CXX)
 
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${EASM_HEADERS} ${EASM_SOURCES})
 
