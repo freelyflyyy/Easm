@@ -1,7 +1,7 @@
 <div align="center">
 <h1>Easm</h1>
 
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/asmjit/asmjit)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/freelyflyyy/Easm)
 
 [English](README.txt) | [简体中文](README_CN.txt)
 
