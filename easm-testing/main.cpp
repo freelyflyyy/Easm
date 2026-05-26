@@ -1,13 +1,9 @@
 #include <easm/base/base.h>
-#include <easm/core/codebuffer.h>
 #include <iostream>
 
 int main()
 {
-    Easm::CodeBuffer buffer;
-    (void)buffer;
-
-    std::cout << "easm-testing: include easm/core/codebuffer.h ok" << std::endl;
+    std::cout << "easm-testing: include easm/base/base.h ok" << std::endl;
     std::cout << "Easm version: "
               << Easm::CurrentVersion.major << '.'
               << Easm::CurrentVersion.minor << '.'

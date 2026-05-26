@@ -5,11 +5,15 @@ set(EASM_BASE_HEADERS
 )
 
 set(EASM_CORE_HEADERS
-    "core/codebuffer.h"
+    "core/baseassembler.h"
+    "core/baseemitter.h"
+    "core/codepack.h"
 )
 
 set(EASM_CORE_SOURCES
-    "core/codebuffer.cpp"
+    "core/baseassembler.cpp"
+    "core/baseemitter.cpp"
+    "core/codepack.cpp"
 )
 
 set(EASM_HEADERS
