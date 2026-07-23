@@ -1,9 +1,9 @@
-#include <easm/base/base.h>
+#include <easm/base/version.h>
 #include <iostream>
 
 int main()
 {
-    std::cout << "easm-testing: include easm/base/base.h ok" << std::endl;
+    std::cout << "easm-testing: include easm/base/version.h ok" << std::endl;
     std::cout << "Easm version: "
               << Easm::CurrentVersion.major << '.'
               << Easm::CurrentVersion.minor << '.'
