@@ -1,19 +1,15 @@
 set(EASM_BASE_HEADERS
-    "base/base.h"
+    "base/config.h"
     "base/type.h"
     "base/version.h"
+    "base/error.h"
+    "base/allocator.h"
 )
 
 set(EASM_CORE_HEADERS
-    "core/baseassembler.h"
-    "core/baseemitter.h"
-    "core/codepack.h"
 )
 
 set(EASM_CORE_SOURCES
-    "core/baseassembler.cpp"
-    "core/baseemitter.cpp"
-    "core/codepack.cpp"
 )
 
 set(EASM_HEADERS
