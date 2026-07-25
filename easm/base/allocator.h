@@ -1,6 +1,7 @@
 #ifndef EASM_BASE_ALLOCATOR_H
 #define EASM_BASE_ALLOCATOR_H
-#include "type.h"
+
+#include <easm/base/type.h>
 
 namespace Easm {
 
@@ -17,6 +18,7 @@ namespace Easm {
      *
      */
     class Allocator final {
+    public:
         /**
          * @brief 原始内存申请函数类型。
          *
@@ -116,13 +118,7 @@ namespace Easm {
             usize size,
             usize alignment
         ) const noexcept {
-            if (EASM_UNLIKELY(m_allocate_fn == nullptr)) {
-                return nullptr;
-            }
-            if (EASM_UNLIKELY(size == 0)) {
-                return nullptr;
-            }
-            if (EASM_UNLIKELY(!is_valid_alignment(alignment))) {
+            if (EASM_UNLIKELY(!valid() || size == 0 || !is_valid_alignment(alignment))) {
                 return nullptr;
             }
             return m_allocate_fn(m_context, size, alignment);
@@ -141,13 +137,7 @@ namespace Easm {
             usize size,
             usize alignment
         ) const noexcept {
-            if (EASM_UNLIKELY(m_deallocate_fn == nullptr)) {
-                return;
-            }
-            if (EASM_UNLIKELY(size == 0)) {
-                return;
-            }
-            if (EASM_UNLIKELY(!is_valid_alignment(alignment))) {
+            if (EASM_UNLIKELY( memory == nullptr || !valid() || size == 0 || !is_valid_alignment(alignment))) {
                 return;
             }
             m_deallocate_fn(m_context, memory, size, alignment);
@@ -176,5 +166,16 @@ namespace Easm {
         AllocateFn m_allocate_fn = nullptr;
         DeallocateFn m_deallocate_fn = nullptr;
     };
+
+    /**
+     * @brief 创建 Easm 提供的默认分配器。
+     *
+     * 该函数返回一个轻量 Allocator 句柄，不返回全局可修改对象。
+     *
+     * 默认分配器的具体实现放在 allocator.cpp 中，allocator.h
+     * 不依赖 malloc、Windows API 或任何平台头文件。
+     */
+    [[nodiscard]]
+    EASM_API Allocator default_allocator() noexcept;
 }
 #endif //EASM_BASE_ALLOCATOR_H

@@ -6,6 +6,10 @@ set(EASM_BASE_HEADERS
     "base/allocator.h"
 )
 
+set(EASM_BASE_SOURCES
+    "base/allocator.cpp"
+)
+
 set(EASM_CORE_HEADERS
 )
 
@@ -18,6 +22,7 @@ set(EASM_HEADERS
 )
 
 set(EASM_SOURCES
+    ${EASM_BASE_SOURCES}
     ${EASM_CORE_SOURCES}
 )
 
