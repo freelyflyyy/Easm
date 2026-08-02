@@ -1,6 +1,5 @@
-#ifndef EASM_BASE_ALLOCATOR_H
-#define EASM_BASE_ALLOCATOR_H
-
+#ifndef EASM_BASE_MEMORY_ALLOCATOR_H
+#define EASM_BASE_MEMORY_ALLOCATOR_H
 #include <easm/base/type.h>
 
 namespace Easm {
@@ -178,4 +177,4 @@ namespace Easm {
     [[nodiscard]]
     EASM_API Allocator default_allocator() noexcept;
 }
-#endif //EASM_BASE_ALLOCATOR_H
+#endif //EASM_BASE_MEMORY_ALLOCATOR_H

@@ -1,5 +1,5 @@
 #include <cstdlib>
-#include <easm/base/allocator.h>
+#include "allocator.h"
 
 namespace Easm {
 

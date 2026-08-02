@@ -3,17 +3,25 @@ set(EASM_BASE_HEADERS
     "base/type.h"
     "base/version.h"
     "base/error.h"
-    "base/allocator.h"
+    "base/memory/allocator.h"
+    "base/container/podarray.h"
 )
 
 set(EASM_BASE_SOURCES
-    "base/allocator.cpp"
+    "base/memory/allocator.cpp"
+    "base/container/podarray.cpp"
 )
 
 set(EASM_CORE_HEADERS
+    "core/codebuffer.h"
+    "core/environment.h"
+    "core/label.h"
+    "core/codeholder.h"
 )
 
 set(EASM_CORE_SOURCES
+    "core/codebuffer.cpp"
+    "core/codeholder.cpp"
 )
 
 set(EASM_HEADERS
