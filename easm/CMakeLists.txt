@@ -17,11 +17,13 @@ set(EASM_CORE_HEADERS
     "core/environment.h"
     "core/label.h"
     "core/codeholder.h"
+    "core/baseemitter.h"
 )
 
 set(EASM_CORE_SOURCES
     "core/codebuffer.cpp"
     "core/codeholder.cpp"
+    "core/baseemitter.cpp"
 )
 
 set(EASM_HEADERS

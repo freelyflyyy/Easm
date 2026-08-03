@@ -30,18 +30,22 @@ namespace Easm {
     }
 
     CodeHolder& CodeHolder::operator=(CodeHolder&& other) noexcept {
-        if (this != &other) {
+        if (this == &other) {
             return *this;
         }
 
         m_environment = other.m_environment;
-        m_code = static_cast<CodeBuffer &&>(
+
+        m_code = static_cast<CodeBuffer&&>(
             other.m_code
         );
+
         m_labels = static_cast<PodArray<LabelEntry>&&>(
             other.m_labels
         );
+
         other.m_environment = Environment{};
+
         return *this;
     }
 
@@ -127,6 +131,6 @@ namespace Easm {
     }
 
     bool CodeHolder::owns_label(Label label) const noexcept {
-        return label.valid() && static_cast<usize>(label.id()) < m_code.size();
+        return label.valid() && static_cast<usize>(label.id()) < m_labels.size();
     }
 }
