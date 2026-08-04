@@ -70,16 +70,6 @@ namespace Easm {
         );
     }
 
-    Error BaseEmitter::truncate(usize new_size) noexcept {
-        if (has_error()) {
-            return m_error;
-        }
-
-        return set_error(
-            code_buffer().truncate(new_size)
-        );
-    }
-
     Error BaseEmitter::bind_label(Label label) noexcept {
         if (has_error()) {
             return m_error;

@@ -1,7 +1,7 @@
 #ifndef EASM_BASE_ERROR_H
 #define EASM_BASE_ERROR_H
 
-#include <easm/base/type.h>
+#include "type.h"
 
 namespace Easm {
 

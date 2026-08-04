@@ -1,27 +1,13 @@
-#include <easm/base/container/podarray.h>
+#include "podarray.h"
 
 #include <cstring>
 
-namespace Easm {
 
-namespace Details {
+namespace Easm::Details {
 
 namespace {
 
 constexpr usize InitialAllocationBytes = 64;
-
-[[nodiscard]]
-constexpr usize maximum_usize() noexcept {
-    return static_cast<usize>(-1);
-}
-
-[[nodiscard]]
-constexpr bool is_valid_alignment(
-    usize alignment
-) noexcept {
-    return alignment != 0 &&
-        (alignment & (alignment - 1)) == 0;
-}
 
 [[nodiscard]]
 usize initial_capacity(
@@ -105,15 +91,12 @@ Error PodArrayStorage::reserve(
     }
 
     if (
-        !m_allocator.valid() ||
-        m_element_size == 0 ||
-        !is_valid_alignment(m_element_alignment)
+        !m_allocator.valid() || m_element_size == 0
     ) {
         return Error::InvalidState;
     }
 
-    const usize maximum_capacity =
-        maximum_usize() / m_element_size;
+    const usize maximum_capacity = MaximumUsize / m_element_size;
 
     if (minimum_capacity > maximum_capacity) {
         return Error::BufferTooLarge;
@@ -122,8 +105,7 @@ Error PodArrayStorage::reserve(
     usize new_capacity = m_capacity;
 
     if (new_capacity == 0) {
-        new_capacity =
-            initial_capacity(m_element_size);
+        new_capacity = initial_capacity(m_element_size);
 
         if (new_capacity > maximum_capacity) {
             new_capacity = maximum_capacity;
@@ -139,8 +121,7 @@ Error PodArrayStorage::reserve(
         new_capacity *= 2;
     }
 
-    const usize new_allocation_size =
-        new_capacity * m_element_size;
+    const usize new_allocation_size = new_capacity * m_element_size;
 
     byte* new_data = static_cast<byte*>(
         m_allocator.allocate(
@@ -165,8 +146,7 @@ Error PodArrayStorage::reserve(
     }
 
     if (m_data != nullptr) {
-        const usize old_allocation_size =
-            m_capacity * m_element_size;
+        const usize old_allocation_size = m_capacity * m_element_size;
 
         m_allocator.deallocate(
             m_data,
@@ -197,11 +177,11 @@ Error PodArrayStorage::append_data(
         return Error::InvalidState;
     }
 
-    if (count > maximum_usize() - m_size) {
+    if (count > MaximumUsize - m_size) {
         return Error::BufferTooLarge;
     }
 
-    if (count > maximum_usize() / m_element_size) {
+    if (count > MaximumUsize / m_element_size) {
         return Error::BufferTooLarge;
     }
 
@@ -209,8 +189,7 @@ Error PodArrayStorage::append_data(
     const usize new_size = old_size + count;
     const usize copy_size = count * m_element_size;
 
-    const byte* source =
-        static_cast<const byte*>(elements);
+    const byte* source = static_cast<const byte*>(elements);
 
     bool source_is_internal = false;
     usize source_offset = 0;
@@ -301,6 +280,4 @@ void PodArrayStorage::release() noexcept {
     m_capacity = 0;
 }
 
-} // namespace Details
-
-} // namespace Easm
+} // namespace Easm::Details

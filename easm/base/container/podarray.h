@@ -6,19 +6,13 @@
 #include <easm/base/memory/allocator.h>
 
 namespace Easm {
+
     namespace Details {
         class EASM_API PodArrayStorage final {
         public:
-            PodArrayStorage(
-                usize element_size,
-                usize element_alignment
-            ) noexcept;
+            PodArrayStorage(usize element_size, usize element_alignment) noexcept;
 
-            PodArrayStorage(
-                usize element_size,
-                usize element_alignment,
-                Allocator allocator
-            ) noexcept;
+            PodArrayStorage(usize element_size, usize element_alignment, Allocator allocator) noexcept;
 
             ~PodArrayStorage() noexcept;
 
@@ -57,10 +51,13 @@ namespace Easm {
                 return m_allocator;
             }
 
+            [[nodiscard]]
             Error reserve(usize minimum_capacity) noexcept;
 
+            [[nodiscard]]
             Error append_data(const void* elements, usize count) noexcept;
 
+            [[nodiscard]]
             Error truncate(usize new_size) noexcept;
 
             void clear() noexcept {
@@ -155,18 +152,22 @@ namespace Easm {
             return data()[index];
         }
 
+        [[nodiscard]]
         Error reserve(usize minimum_capacity) noexcept {
             return m_storage.reserve(minimum_capacity);
         }
 
+        [[nodiscard]]
         Error append(const T& element) noexcept {
             return m_storage.append_data(&element, 1);
         }
 
+        [[nodiscard]]
         Error append_data(const T* elements, usize count) noexcept {
             return m_storage.append_data(elements, count);
         }
 
+        [[nodiscard]]
         Error truncate(usize new_size) noexcept {
             return m_storage.truncate(new_size);
         }

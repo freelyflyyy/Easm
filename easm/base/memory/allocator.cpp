@@ -1,86 +1,74 @@
-#include <cstdlib>
 #include "allocator.h"
+
+#include <cstdlib>
+#include <cstring>
 
 namespace Easm {
 
     namespace {
 
-        struct AllocationHeader final {
-            void* original_memory;
-        };
-
-        /**
-         * 获取 usize 能表达的最大值。
-         */
-        [[nodiscard]]
-        constexpr usize maximum_usize() noexcept {
-            return static_cast<usize>(-1);
-        }
-
-        [[nodiscard]]
-        constexpr usize normalize_alignment(usize alignment) noexcept {
-            constexpr usize HeaderAlignment = alignof(AllocationHeader);
-            return alignment < HeaderAlignment ? HeaderAlignment : alignment;
-        }
-
+        constexpr usize MetadataSize = sizeof(void*);
 
         /**
          * 默认内存申请函数。
          *
          * 在malloc上增加对齐
-         *
          */
         [[nodiscard]]
         void* default_allocate(
-            void* context,
+            void* /*context*/,
             usize size,
             usize alignment
         ) noexcept {
-            //默认分配器不使用context
-            static_cast<void>(context);
+            const usize alignment_padding = alignment - 1;
 
-            const usize actual_alignment = normalize_alignment(alignment);
-            constexpr usize MetadataSize = alignof(AllocationHeader);
-            const usize alignment_padding = actual_alignment - 1;
-            const usize metadata_with_padding = MetadataSize + alignment_padding;
-
-            if (EASM_UNLIKELY(size > maximum_usize() - metadata_with_padding)) {
+            if (EASM_UNLIKELY(alignment_padding > MaximumUsize - MetadataSize)) {
                 return nullptr;
             }
-            const usize total_size = size + metadata_with_padding;
-            void* original_memory = std::malloc(total_size);
+
+            const usize allocation_overhead = MetadataSize + alignment_padding;
+
+            if (EASM_UNLIKELY(size > MaximumUsize - allocation_overhead)) {
+                return nullptr;
+            }
+
+            void* original_memory = std::malloc(size + allocation_overhead);
 
             if (EASM_UNLIKELY(original_memory == nullptr)) {
                 return nullptr;
             }
 
             const uptr original_address = reinterpret_cast<uptr>(original_memory);
-            const uptr first_available = original_address + static_cast<uptr>(MetadataSize);
-            const uptr aligned_address = (first_available + alignment_padding) & ~alignment_padding;
+            const uptr first_available_address = original_address + MetadataSize;
+            const uptr alignment_mask = static_cast<uptr>(alignment_padding);
+            const uptr aligned_address = (first_available_address + alignment_mask) & ~alignment_mask;
 
-            auto* header = reinterpret_cast<AllocationHeader*>(aligned_address - MetadataSize);
-            header->original_memory = original_memory;
-            return reinterpret_cast<void*>(aligned_address);
+            byte* aligned_memory = reinterpret_cast<byte*>(aligned_address);
+
+            std::memcpy(aligned_memory - MetadataSize, &original_memory, MetadataSize);
+
+            return aligned_memory;
         }
 
+        /**
+         * 默认内存释放函数。
+         */
         void default_deallocate(
-            void* context,
+            void* /*context*/,
             void* memory,
-            usize size,
-            usize alignment
+            usize /*size*/,
+            usize /*alignment*/
         ) noexcept {
-            static_cast<void>(context);
-            static_cast<void>(size);
-            static_cast<void>(alignment);
-
-            if (memory == nullptr) {
+            if (EASM_UNLIKELY(memory == nullptr)) {
                 return;
             }
-            const uptr aligned_address = reinterpret_cast<uptr>(memory);
-            constexpr uptr MetadataSize = sizeof(AllocationHeader);
 
-            auto* header = reinterpret_cast<AllocationHeader*>(aligned_address - MetadataSize);
-            std::free(header->original_memory);
+            void* original_memory = nullptr;
+            const byte* metadata = static_cast<const byte*>(memory) - MetadataSize;
+
+            std::memcpy(&original_memory, metadata, MetadataSize);
+
+            std::free(original_memory);
         }
     }
 

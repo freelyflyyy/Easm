@@ -85,7 +85,7 @@ namespace Easm {
     }
 
     Error CodeHolder::bind_label(Label label, usize offset) noexcept {
-        if (!owns_label(label)) {
+        if (!valid_label_id(label)) {
             return Error::InvalidLabel;
         }
 
@@ -106,7 +106,7 @@ namespace Easm {
     }
 
     bool CodeHolder::label_bound(Label label) const noexcept {
-        if (!owns_label(label)) {
+        if (!valid_label_id(label)) {
             return false;
         }
         return m_labels[static_cast<usize>(label.id())].bound;
@@ -115,7 +115,7 @@ namespace Easm {
     Error CodeHolder::label_offset(Label label, usize &out_offset) const noexcept {
         out_offset = 0;
 
-        if (!owns_label(label)) {
+        if (!valid_label_id(label)) {
             return Error::InvalidLabel;
         }
 
@@ -130,7 +130,7 @@ namespace Easm {
         return Error::Success;
     }
 
-    bool CodeHolder::owns_label(Label label) const noexcept {
+    bool CodeHolder::valid_label_id(Label label) const noexcept {
         return label.valid() && static_cast<usize>(label.id()) < m_labels.size();
     }
 }

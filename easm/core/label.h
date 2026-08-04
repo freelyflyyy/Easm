@@ -6,7 +6,7 @@ namespace Easm {
 
     using LabelId = u32;
 
-    inline constexpr LabelId InvalidLabelId = static_cast<LabelId>(-1);
+    inline constexpr LabelId InvalidLabelId = MaximumU32;
 
     class CodeHolder;
 
