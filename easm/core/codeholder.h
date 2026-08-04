@@ -5,11 +5,14 @@
 #include <easm/base/error.h>
 #include <easm/base/memory/allocator.h>
 #include <easm/base/type.h>
-#include <easm/core/codebuffer.h>
-#include <easm/core/environment.h>
-#include <easm/core/label.h>
+#include "codebuffer.h"
+#include "environment.h"
+#include "label.h"
 
 namespace Easm {
+
+    class BaseEmitter;
+
     class EASM_API CodeHolder final {
     public:
         explicit CodeHolder(Environment environment) noexcept;
@@ -35,11 +38,6 @@ namespace Easm {
         [[nodiscard]]
         Allocator allocator() const noexcept {
             return m_code.allocator();
-        }
-
-        [[nodiscard]]
-        CodeBuffer& code() noexcept {
-            return m_code;
         }
 
         [[nodiscard]]
@@ -74,11 +72,18 @@ namespace Easm {
         };
 
         [[nodiscard]]
-        bool owns_label(Label label) const noexcept;
+        CodeBuffer& mutable_code() noexcept {
+            return m_code;
+        }
+
+        [[nodiscard]]
+        bool valid_label_id(Label label) const noexcept;
 
         Environment m_environment;
         CodeBuffer m_code;
         PodArray<LabelEntry> m_labels;
+
+        friend class BaseEmitter;
     };
 } // namespace Easm
 #endif //EASM_CORE_CODEHOLDER_H

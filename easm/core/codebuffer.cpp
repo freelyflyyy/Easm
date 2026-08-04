@@ -1,4 +1,4 @@
-#include <easm/core/codebuffer.h>
+#include "codebuffer.h"
 
 #include <cstring>
 

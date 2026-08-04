@@ -3,7 +3,7 @@
 
 #include <easm/base/error.h>
 #include <easm/base/type.h>
-#include <easm/core/codeholder.h>
+#include "codeholder.h"
 
 namespace Easm {
 
@@ -43,26 +43,6 @@ namespace Easm {
 
         ~BaseEmitter() noexcept = default;
 
-        [[nodiscard]]
-        CodeHolder& code_holder() noexcept {
-            return m_code_holder;
-        }
-
-        [[nodiscard]]
-        const CodeHolder& code_holder() const noexcept {
-            return m_code_holder;
-        }
-
-        [[nodiscard]]
-        CodeBuffer& code_buffer() noexcept {
-            return m_code_holder.code();
-        }
-
-        [[nodiscard]]
-        const CodeBuffer& code_buffer() const noexcept {
-            return m_code_holder.code();
-        }
-
         Error reserve(usize minimum_capacity) noexcept;
 
         Error append_u8(u8 value) noexcept;
@@ -70,8 +50,6 @@ namespace Easm {
         Error append_data(const byte* data, usize size) noexcept;
 
         Error write_data(usize offset, const byte* data, usize size) noexcept;
-
-        Error truncate(usize new_size) noexcept;
 
         Error bind_label(Label label) noexcept;
 
@@ -84,6 +62,16 @@ namespace Easm {
         Error set_error(Error error) noexcept;
 
     private:
+        [[nodiscard]]
+        CodeBuffer& code_buffer() noexcept {
+            return m_code_holder.mutable_code();
+        }
+
+        [[nodiscard]]
+        const CodeBuffer& code_buffer() const noexcept {
+            return m_code_holder.code();
+        }
+
         CodeHolder& m_code_holder;
         Error m_error = Error::Success;
     };
