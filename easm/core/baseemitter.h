@@ -54,10 +54,7 @@ namespace Easm {
         Error bind_label(Label label) noexcept;
 
         [[nodiscard]]
-        bool label_bound(Label label) const noexcept;
-
-        [[nodiscard]]
-        Error label_offset(Label label, usize& out_offset) noexcept;
+        Error query_label_offset(Label label, usize& out_offset) const noexcept;
 
         Error set_error(Error error) noexcept;
 
