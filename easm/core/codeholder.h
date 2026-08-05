@@ -54,12 +54,6 @@ namespace Easm {
         Error create_label(Label& label) noexcept;
 
         [[nodiscard]]
-        Error bind_label(Label label) noexcept;
-
-        [[nodiscard]]
-        Error bind_label(Label label, usize offset) noexcept;
-
-        [[nodiscard]]
         bool label_bound(Label label) const noexcept;
 
         [[nodiscard]]
@@ -70,6 +64,12 @@ namespace Easm {
             usize offset = 0;
             bool bound = false;
         };
+
+        [[nodiscard]]
+        Error bind_label(Label label) noexcept;
+
+        [[nodiscard]]
+        Error bind_label(Label label, usize offset) noexcept;
 
         [[nodiscard]]
         CodeBuffer& mutable_code() noexcept {

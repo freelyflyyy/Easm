@@ -26,9 +26,14 @@ set(EASM_CORE_SOURCES
     "core/baseemitter.cpp"
 )
 
+set(EASM_X86_HEADERS
+    "x86/register.h"
+)
+
 set(EASM_HEADERS
     ${EASM_BASE_HEADERS}
     ${EASM_CORE_HEADERS}
+    ${EASM_X86_HEADERS}
 )
 
 set(EASM_SOURCES

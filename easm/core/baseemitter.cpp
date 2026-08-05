@@ -80,19 +80,14 @@ namespace Easm {
         );
     }
 
-    bool BaseEmitter::label_bound(Label label) const noexcept {
-        return m_code_holder.label_bound(label);
-    }
 
-    Error BaseEmitter::label_offset(Label label, usize &out_offset) noexcept {
+    Error BaseEmitter::query_label_offset(Label label, usize &out_offset) const noexcept {
         if (has_error()) {
             out_offset = 0;
             return m_error;
         }
 
-        return set_error(
-            m_code_holder.label_offset(label, out_offset)
-        );
+        return m_code_holder.label_offset(label, out_offset);
     }
 
     Error BaseEmitter::set_error(Error error) noexcept {

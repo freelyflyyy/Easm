@@ -52,9 +52,9 @@ namespace Easm {
 
         [[nodiscard]]
         constexpr bool valid() const noexcept {
-            return m_architecture != Architecture::None &&
-                    m_bitness != Bitness::None &&
-                    m_endianness != Endianness::None;
+            return is_valid_architecture(m_architecture) &&
+                    is_valid_bitness(m_bitness) &&
+                    is_valid_endianness(m_endianness);
         }
 
         [[nodiscard]]
@@ -96,6 +96,43 @@ namespace Easm {
         }
 
     private:
+        [[nodiscard]]
+        static constexpr bool is_valid_architecture(Architecture architecture) noexcept {
+            switch (architecture) {
+                case Architecture::None:
+                    return false;
+                case Architecture::X86:
+                case Architecture::Arm:
+                    return true;
+            }
+            return false;
+        }
+
+        [[nodiscard]]
+        static constexpr bool is_valid_bitness(Bitness bitness) noexcept {
+            switch (bitness) {
+                case Bitness::None:
+                    return false;
+                case Bitness::Bits32:
+                case Bitness::Bits64:
+                    return true;
+            }
+            return false;
+        }
+
+        [[nodiscard]]
+        static constexpr bool is_valid_endianness(Endianness endianness) noexcept {
+            switch (endianness) {
+                case Endianness::None:
+                    return false;
+
+                case Endianness::Little:
+                case Endianness::Big:
+                    return true;
+            }
+            return false;
+        }
+
         Architecture m_architecture = Architecture::None;
         Bitness m_bitness = Bitness::None;
         Endianness m_endianness = Endianness::None;
